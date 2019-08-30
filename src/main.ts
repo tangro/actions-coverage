@@ -67,6 +67,7 @@ async function run() {
     // Commit Comment
     // createComment({ context, comment: comment.text });
   } catch (error) {
+    console.error(error);
     core.setFailed(error.message);
   }
 }
