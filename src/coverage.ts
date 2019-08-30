@@ -110,8 +110,9 @@ ${results.text}`;
 
 export async function zipFiles(): Promise<string> {
   const destination = path.join(__dirname, 'coverage.zip');
-  await exec('cd', ['coverage/lcov-report']);
-  await exec('zip', ['--quiet', '--recurse-paths', destination, '*']);
+  await exec('zip', ['--quiet', '--recurse-paths', destination, '*'], {
+    cwd: path.join(__dirname, 'coverage', 'lcov-report')
+  });
 
   return destination;
 }
