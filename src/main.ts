@@ -1,6 +1,5 @@
 import * as core from '@actions/core';
 
-import { runInstall } from './install';
 import {
   runCoverage,
   createCommentText as createCoverageComment,
@@ -54,9 +53,6 @@ async function run() {
     let comment = {
       text: ''
     };
-
-    // Install
-    await runInstall();
 
     // Coverage
     await wrapWithSetStatus(context, 'coverage', async () => {
