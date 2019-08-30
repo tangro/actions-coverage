@@ -21,7 +21,7 @@ jobs:
       run: npm run build
     - name: add and push 
       run: |
-        header=$(echo -n "ankri:${GITHUB_TOKEN}" | base64)
+        header=$(echo -n "ankri:${{ secrets.GITHUB_TOKEN }}" | base64)
         git add -A
         git commit -m "released new version"
         git -c http.extraheader="AUTHORIZATION: basic $header" push origin $(node -p -e "require('./package.json').version")
