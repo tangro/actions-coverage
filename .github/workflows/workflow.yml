@@ -22,7 +22,9 @@ jobs:
     - name: add and push 
       run: |
         git add -A
+        git config user.email "github@ankri.de"
+        git config user.name "ankri"
         git commit -m "released new version"
-        git -c http.extraheader="AUTHORIZATION: basic $(echo -n "ankri:${{ secrets.GITHUB_TOKEN }}" | base64)" push origin $(node -p -e "require('./package.json').version")
+        git push origin $(node -p -e "require('./package.json').version")
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
