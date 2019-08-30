@@ -11,13 +11,15 @@ jobs:
     
     steps:
     - uses: actions/checkout@v1
+    - name: get version
+      run: PACKAGE_VERSION=$(node -p -e "require('./package.json').version")
     - name: go to release branch
-      run: git checkout -B $(node -p -e "require('./package.json').version")
+      run: git checkout -B $PACKAGE_VERSION
     - name: merge with master
-      run: git merge master --no-edit
+      run: git merge origin/master --no-edit
     - name: run build
       run: npm run build
-    - name: add and push
+    - name: add and push origin $PACKAGE_VERSION
       run: |
         git add -A
         git commit -m "released new version"
