@@ -22,8 +22,7 @@ jobs:
     - name: add and push 
       run: |
         git add -A
-        git config user.email "github@ankri.de"
-        git config user.name "ankri"
+        git config user.name ${{ github.actor }}
         git commit -m "released new version"
         git push origin $(node -p -e "require('./package.json').version")
       env:
