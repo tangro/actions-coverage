@@ -25,6 +25,6 @@ jobs:
         git config user.email "${{ github.actor }}@users.noreply.github.com"
         git add -A
         git commit -m "released new version"
-        git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${ github.repository }.git $(node -p -e "require('./package.json').version")
+        git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git $(node -p -e "require('./package.json').version")
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
