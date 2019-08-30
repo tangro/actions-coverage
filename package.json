@@ -1,30 +1,27 @@
 {
-  "name": "node12-template-action",
-  "version": "0.0.0",
+  "name": "actions-coverage",
+  "version": "0.0.1",
   "private": true,
-  "description": "Node 12 template action",
+  "description": "GitHub Action to run coverage",
   "main": "lib/main.js",
   "scripts": {
-    "build": "tsc",
-    "test": "jest"
+    "build": "ncc build src/main.ts --minify",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/actions/javascript-template.git"
-  },
-  "keywords": [
-    "actions",
-    "node",
-    "setup"
-  ],
-  "author": "GitHub",
-  "license": "MIT",
+  "author": "ankri",
+  "license": "ISC",
   "dependencies": {
-    "@actions/core": "^1.0.0"
+    "@actions/core": "^1.0.0",
+    "@actions/exec": "^1.0.0",
+    "@actions/github": "^1.0.0",
+    "bestzip": "^2.1.4",
+    "lodash": "^4.17.15"
   },
   "devDependencies": {
     "@types/jest": "^24.0.13",
+    "@types/lodash": "^4.14.138",
     "@types/node": "^12.0.4",
+    "@zeit/ncc": "^0.20.4",
     "jest": "^24.8.0",
     "jest-circus": "^24.7.1",
     "ts-jest": "^24.0.2",
