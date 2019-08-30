@@ -1,8 +1,8 @@
 import { exec } from '@actions/exec';
 import * as fs from 'fs';
+import * as core from '@actions/core';
 import { Result } from './Result';
 import { padEnd, padStart } from 'lodash';
-import zip from 'bestzip';
 import path from 'path';
 
 interface Coverage {
@@ -110,9 +110,27 @@ ${results.text}`;
 
 export async function zipFiles(): Promise<string> {
   const destination = path.join(__dirname, 'coverage.zip');
+
+  let stdout = '';
+  let stderr = '';
+
   await exec('zip', ['--quiet', '--recurse-paths', destination, '*'], {
-    cwd: path.join(__dirname, 'coverage', 'lcov-report')
+    cwd: path.join(__dirname, 'coverage', 'lcov-report'),
+    listeners: {
+      stdout: (data: Buffer) => {
+        stdout += data.toString();
+      },
+      stderr: (data: Buffer) => {
+        stderr += data.toString();
+      }
+    }
   });
+
+  console.log(stdout);
+  console.log(stderr);
+
+  core.debug(`zip STDOUT: ${stdout}`);
+  core.error(`zip STDERR: ${stderr}`);
 
   return destination;
 }
