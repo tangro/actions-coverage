@@ -3,8 +3,7 @@ import fs from 'fs';
 
 import {
   runCoverage,
-  createCommentText as createCoverageComment,
-  zipFiles
+  createCommentText as createCoverageComment
 } from './coverage';
 import { setStatus } from './github/status';
 import { GitHubContext } from './github/context';
@@ -48,8 +47,6 @@ async function run() {
     const context = JSON.parse(
       process.env.GITHUB_CONTEXT || ''
     ) as GitHubContext;
-    const [owner, repo] = context.repository.split('/');
-    const branch = (context.ref as string).replace('refs/heads/', '');
 
     let comment = {
       text: ''
@@ -61,11 +58,6 @@ async function run() {
       comment.text += createCoverageComment(coverage);
       return coverage;
     });
-
-    console.log(fs.readdirSync('./coverage/lcov-report'));
-
-    // zip coverage report
-    await zipFiles();
 
     // Commit Comment
     // createComment({ context, comment: comment.text });
