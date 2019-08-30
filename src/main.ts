@@ -1,4 +1,5 @@
 import * as core from '@actions/core';
+import fs from 'fs';
 
 import {
   runCoverage,
@@ -60,6 +61,8 @@ async function run() {
       comment.text += createCoverageComment(coverage);
       return coverage;
     });
+
+    console.log(fs.readdirSync('./coverage/lcov-report'));
 
     // zip coverage report
     await zipFiles();
