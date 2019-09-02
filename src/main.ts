@@ -8,7 +8,7 @@ import {
 import { setStatus } from './github/status';
 import { GitHubContext } from './github/context';
 import { Result } from './Result';
-import { createComment } from './github/comment';
+import { createComment } from '@tangro/tangro-github-toolkit';
 
 async function wrapWithSetStatus<T>(
   context: GitHubContext,
