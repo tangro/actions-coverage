@@ -17,6 +17,8 @@ jobs:
         run: git merge origin/master --no-edit
       - name: npm install
         run: npm install
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: run build
         run: npm run build
       - name: add and push
