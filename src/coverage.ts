@@ -1,7 +1,9 @@
 import { exec } from '@actions/exec';
 import * as fs from 'fs';
-import { Result } from './Result';
+import * as core from '@actions/core';
 import { padEnd, padStart } from 'lodash';
+
+import { Result } from './Result';
 
 interface Coverage {
   lines: {
@@ -86,7 +88,9 @@ export async function runCoverage() {
       }
     }
   };
-  await exec('npm', ['run', 'coverage:collect'], options);
+  const command = core.getInput('command') || 'coverage:collect';
+
+  await exec('npm', ['run', command], options);
   try {
     const resultFile = fs
       .readFileSync('./coverage/coverage-summary.json')

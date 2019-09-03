@@ -1,14 +1,14 @@
 import * as core from '@actions/core';
-import fs from 'fs';
-
+import {
+  setStatus,
+  GitHubContext,
+  createComment
+} from '@tangro/tangro-github-toolkit';
 import {
   runCoverage,
   createCommentText as createCoverageComment
 } from './coverage';
-import { setStatus } from './github/status';
-import { GitHubContext } from './github/context';
 import { Result } from './Result';
-import { createComment } from '@tangro/tangro-github-toolkit';
 
 async function wrapWithSetStatus<T>(
   context: GitHubContext,
@@ -60,7 +60,9 @@ async function run() {
     });
 
     // Commit Comment
-    // createComment({ context, comment: comment.text });
+    if (core.getInput('post-comment') === 'true') {
+      createComment({ context, comment: comment.text });
+    }
   } catch (error) {
     console.error(error);
     core.setFailed(error.message);

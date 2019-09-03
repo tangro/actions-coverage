@@ -1,6 +1,13 @@
 name: 'Tangro Coverage'
 description: 'Run code coverage, set a status and zip the coverage report'
 author: 'tangro'
+inputs:
+  command:
+    description: 'The npm command to run to collect the coverage. Gets called with npm run ${command}. Default: coverage:collect'
+    default: 'coverage:collect'
+  post-comment:
+    description: 'Set to true to post a comment after the coverage has been collected. Default false'
+    default: false
 runs:
   using: 'node12'
   main: 'dist/index.js'

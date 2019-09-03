@@ -1,6 +1,6 @@
 {
   "name": "actions-coverage",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "private": true,
   "description": "GitHub Action to run coverage",
   "main": "lib/main.js",
@@ -13,7 +13,7 @@
   "dependencies": {
     "@actions/core": "^1.0.0",
     "@actions/exec": "^1.0.0",
-    "@tangro/tangro-github-toolkit": "0.1.2",
+    "@tangro/tangro-github-toolkit": "^0.4.0",
     "lodash": "^4.17.15"
   },
   "devDependencies": {
