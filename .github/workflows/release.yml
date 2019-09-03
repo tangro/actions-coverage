@@ -16,7 +16,7 @@ jobs:
       - name: merge with master
         run: git merge origin/master --no-edit
       - name: Authenticate with GitHub package registry
-        run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }} > ~/.npmrc"
+        run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
       - name: npm install
         run: npm install
       - name: run build
