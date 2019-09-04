@@ -2,7 +2,7 @@ import { exec } from '@actions/exec';
 import * as fs from 'fs';
 import * as core from '@actions/core';
 import { padEnd, padStart } from 'lodash';
-
+import { ExecOptions } from '@actions/exec/lib/interfaces';
 import { Result } from './Result';
 
 interface Coverage {
@@ -81,7 +81,7 @@ const parseCoverage = (coverageSummary: Coverage): Result<Coverage> => {
 
 export async function runCoverage() {
   let output = '';
-  const options = {
+  const options: ExecOptions = {
     listeners: {
       stdout: (data: Buffer) => {
         output += data.toString();
@@ -101,6 +101,7 @@ export async function runCoverage() {
     fs.writeFileSync('coverage.json', resultFile);
     return coverageResults;
   } catch (error) {
+    console.log('ERROR', error);
     throw error;
   }
 }
