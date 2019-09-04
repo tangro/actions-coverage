@@ -2,6 +2,7 @@ import { exec } from '@actions/exec';
 import * as fs from 'fs';
 import * as core from '@actions/core';
 import { padEnd, padStart } from 'lodash';
+import path from 'path';
 import { ExecOptions } from '@actions/exec/lib/interfaces';
 import { Result } from './Result';
 
@@ -79,7 +80,7 @@ const parseCoverage = (coverageSummary: Coverage): Result<Coverage> => {
   };
 };
 
-export async function runCoverage() {
+export async function runCoverage({ repo }: { repo: string }) {
   let output = '';
   const options: ExecOptions = {
     listeners: {
@@ -93,7 +94,14 @@ export async function runCoverage() {
   await exec('npm', ['run', command], options);
   try {
     const resultFile = fs
-      .readFileSync('./coverage/coverage-summary.json')
+      .readFileSync(
+        path.join(
+          process.env.RUNNER_WORKSPACE as string,
+          repo,
+          'coverage',
+          'coverage-summary.json'
+        )
+      )
       .toString('utf-8');
     const total = JSON.parse(resultFile).total as Coverage;
 

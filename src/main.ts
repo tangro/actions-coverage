@@ -47,6 +47,7 @@ async function run() {
     const context = JSON.parse(
       process.env.GITHUB_CONTEXT || ''
     ) as GitHubContext;
+    const [owner, repo] = context.repository.split('/');
 
     let comment = {
       text: ''
@@ -54,7 +55,7 @@ async function run() {
 
     // Coverage
     await wrapWithSetStatus(context, 'coverage', async () => {
-      const coverage = await runCoverage();
+      const coverage = await runCoverage({ repo });
       comment.text += createCoverageComment(coverage);
       return coverage;
     });
