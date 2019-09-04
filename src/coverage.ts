@@ -94,14 +94,7 @@ export async function runCoverage({ repo }: { repo: string }) {
   await exec('npm', ['run', command], options);
   try {
     const resultFile = fs
-      .readFileSync(
-        path.join(
-          process.env.RUNNER_WORKSPACE as string,
-          repo,
-          'coverage',
-          'coverage-summary.json'
-        )
-      )
+      .readFileSync(path.join(__dirname, 'coverage', 'coverage-summary.json'))
       .toString('utf-8');
     const total = JSON.parse(resultFile).total as Coverage;
 
