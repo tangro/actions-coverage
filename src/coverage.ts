@@ -97,9 +97,19 @@ export async function runCoverage({ repo }: { repo: string }) {
     console.log(
       fs.readdirSync(path.join(process.env.RUNNER_WORKSPACE as string))
     );
+    console.log(
+      fs.readdirSync(path.join(process.env.RUNNER_WORKSPACE as string), repo)
+    );
 
     const resultFile = fs
-      .readFileSync(path.join(__dirname, 'coverage', 'coverage-summary.json'))
+      .readFileSync(
+        path.join(
+          path.join(process.env.RUNNER_WORKSPACE as string),
+          repo,
+          'coverage',
+          'coverage-summary.json'
+        )
+      )
       .toString('utf-8');
     const total = JSON.parse(resultFile).total as Coverage;
 
