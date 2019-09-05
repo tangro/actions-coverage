@@ -26,7 +26,7 @@ jobs:
 
 > **Attention** Do not forget to pass the `GITHUB_TOKEN` and the `GITHUB_CONTEXT`
 
-Steps the workflow will perform:
+Steps the example job will perform:
 
 1. Check out the latest code
 2. Use node
@@ -35,11 +35,11 @@ Steps the workflow will perform:
 
 # Usage
 
-The action will call `npm run ${command}`. The `command` can be specified by passing an input variable `command` to the Action. It defaults to `coverage:collect`. The `command` should run `jest --coverage` at some point.
+The action will call `npm run ${command}`. The `command` can be specified by passing an input variable `command` to the Action. It defaults to `coverage:collect`. The `command` should run `jest --coverage --coverageReporters=\"json\" --coverageReporters=\"json-summary\" --coverageReporters=\"lcov\" --coverageReporters=\"text\"`.
 
 The action will set a status to the commit to `pending` under the context `Tangro CI/coverage`. When it finishes successfully it will change the status to `success` and the coverage percentages will be displayed in the description. If it fails the action will set the status to `failed`.
 
-It is also possible that the Actions posts a comment with the result to the commit. You have to set `post-comment` to `true`.
+It is also possible that the action posts a comment with the result to the commit. You have to set `post-comment` to `true`.
 
 ## Example with different command
 
