@@ -93,12 +93,10 @@ export async function runCoverage({ repo }: { repo: string }) {
 
   await exec('npm', ['run', command], options);
   try {
-    console.log(fs.readdirSync(__dirname));
     console.log(
-      fs.readdirSync(path.join(process.env.RUNNER_WORKSPACE as string))
-    );
-    console.log(
-      fs.readdirSync(path.join(process.env.RUNNER_WORKSPACE as string, repo))
+      fs.readdirSync(
+        path.join(process.env.RUNNER_WORKSPACE as string, repo, 'coverage')
+      )
     );
 
     const resultFile = fs
