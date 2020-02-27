@@ -67,6 +67,22 @@ steps:
       GITHUB_CONTEXT: ${{ toJson(github) }}
 ```
 
+There is also an option to adapt the minimum coverage percentage limits that need to be achived for the build to complete successfully. You can configure an overall minimum by setting the environment variable `COVERAGE` and/or setting specific minimums for the different coverage metrics: `COVERAGE_LINES`, `COVERAGE_STATEMENTS`, `COVERAGE_FUNCTIONS` or `COVERAGE_BRANCHES`.
+
+## Example with alternate coverage minimums
+
+```yml
+steps:
+  - name: Collect Coverage
+    uses: tangro/actions-coverage@1.0.0
+    env:
+      COVERAGE: 94
+      COVERAGE_LINES: 96
+      COVERAGE_BRANCHES: 92
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_CONTEXT: ${{ toJson(github) }}
+```
+
 ## Development
 
 Follow the guide of the [tangro-actions-template](https://github.com/tangro/tangro-actions-template)

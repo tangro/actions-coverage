@@ -33,6 +33,13 @@ interface Coverage {
   };
 }
 
+enum CoverageType {
+  LINES       = 'lines',
+  STATEMENTS  = 'statements',
+  FUNCTIONS   = 'functions',
+  BRANCHES    = 'branches',
+}
+
 const markdownTableCoverage = (coverage: Coverage): string => {
   const formatKey = (k: string) => padEnd(k, 7);
   const formatValue = (v: string) => padStart(v.toString(), 7);
@@ -66,10 +73,10 @@ const parseCoverage = (coverageSummary: Coverage): Result<Coverage> => {
   const { lines, statements, functions, branches } = coverageSummary;
   const shortText = `lns:${lines.pct}% bra:${branches.pct}% fun:${functions.pct}% stm:${statements.pct}%`;
   const isOkay =
-    lines.pct === 100 &&
-    statements.pct === 100 &&
-    functions.pct === 100 &&
-    branches.pct === 100;
+    lines.pct >= getMinCoveragePct(CoverageType.LINES) &&
+    statements.pct >= getMinCoveragePct(CoverageType.STATEMENTS) &&
+    functions.pct >= getMinCoveragePct(CoverageType.FUNCTIONS) &&
+    branches.pct >= getMinCoveragePct(CoverageType.BRANCHES);
   const asMarkdownTable = markdownTableCoverage(coverageSummary);
 
   return {
@@ -78,6 +85,11 @@ const parseCoverage = (coverageSummary: Coverage): Result<Coverage> => {
     shortText,
     text: asMarkdownTable
   };
+};
+
+const getMinCoveragePct = (type: CoverageType) => {
+  const minValue = parseInt(process.env[`COVERAGE_${type.toUpperCase()}`] || process.env[`COVERAGE`] || '');
+  return !isNaN(minValue) ? minValue : 100;
 };
 
 export async function runCoverage({ repo }: { repo: string }) {
