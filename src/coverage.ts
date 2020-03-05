@@ -88,7 +88,7 @@ const parseCoverage = (coverageSummary: Coverage): Result<Coverage> => {
 };
 
 const getMinCoveragePct = (type: CoverageType) => {
-  const minValue = parseInt(process.env[`COVERAGE_${type.toUpperCase()}`] || process.env[`COVERAGE`] || '');
+  const minValue = parseInt(core.getInput('coverage-' + type) || core.getInput('coverage') || '');
   return !isNaN(minValue) ? minValue : 100;
 };
 
