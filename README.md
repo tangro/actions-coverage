@@ -67,7 +67,7 @@ steps:
       GITHUB_CONTEXT: ${{ toJson(github) }}
 ```
 
-There is also an option to adapt the minimum coverage percentage limits that need to be achived for the build to complete successfully (Defaults to `100`). You can configure an overall minimum by setting the environment variable `COVERAGE` and/or setting specific minimums for the different coverage metrics: `COVERAGE_LINES`, `COVERAGE_STATEMENTS`, `COVERAGE_FUNCTIONS` or `COVERAGE_BRANCHES`.
+There is also an option to adapt the minimum coverage percentage limits that need to be achieved for the build to complete successfully (Defaults to `100`). You can configure an overall minimum by setting the environment variable `COVERAGE` and/or setting specific minimums for the different coverage metrics: `COVERAGE_LINES`, `COVERAGE_STATEMENTS`, `COVERAGE_FUNCTIONS` or `COVERAGE_BRANCHES`.
 
 ## Example with alternate coverage minimums
 
