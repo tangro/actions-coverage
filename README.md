@@ -2,6 +2,10 @@
 
 A @tangro action to run run jest with coverage. The command which is run is configurable and defaults to `coverage:collect`.
 
+# Version
+
+Either use `latest` to always get the latest version or the specific version to get a fixed version of the action.
+
 # Example Usage
 
 ```yml

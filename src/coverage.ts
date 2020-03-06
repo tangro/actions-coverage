@@ -4,7 +4,7 @@ import * as core from '@actions/core';
 import { padEnd, padStart } from 'lodash';
 import path from 'path';
 import { ExecOptions } from '@actions/exec/lib/interfaces';
-import { Result } from './Result';
+import { Result } from '@tangro/tangro-github-toolkit';
 
 interface Coverage {
   lines: {
@@ -109,7 +109,7 @@ export async function runCoverage({ repo }: { repo: string }) {
     fs.writeFileSync('coverage.json', resultFile);
     return coverageResults;
   } catch (error) {
-    console.log('ERROR', error);
+    core.error(`ERROR: ${error}`);
     throw error;
   }
 }
