@@ -22,7 +22,7 @@ jobs:
       - name: Run npm install
         run: npm install
       - name: Collect Coverage
-        uses: tangro/actions-coverage@1.0.0
+        uses: tangro/actions-coverage@1.1.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_CONTEXT: ${{ toJson(github) }}
@@ -50,7 +50,7 @@ It is also possible that the action posts a comment with the result to the commi
 ```yml
 steps:
   - name: Collect Coverage
-    uses: tangro/actions-coverage@1.0.0
+    uses: tangro/actions-coverage@1.1.1
     with:
       command: 'coverage'
     env:
@@ -63,9 +63,26 @@ steps:
 ```yml
 steps:
   - name: Collect Coverage
-    uses: tangro/actions-coverage@1.0.0
+    uses: tangro/actions-coverage@1.1.1
     with:
       post-comment: true
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_CONTEXT: ${{ toJson(github) }}
+```
+
+There is also an option to adapt the minimum coverage percentage limits that need to be achieved for the build to complete successfully (Defaults to `100`). You can configure an overall minimum by setting the action argument `coverage` and/or setting specific minimums for the different coverage metrics: `coverage-lines`, `coverage-statements`, `coverage-functions` or `coverage-branches`.
+
+## Example with alternate coverage minimums
+
+```yml
+steps:
+  - name: Collect Coverage
+    uses: tangro/actions-coverage@1.1.1
+    with:
+      coverage: 94
+      coverage-lines: 96
+      coverage-branches: 92
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       GITHUB_CONTEXT: ${{ toJson(github) }}
