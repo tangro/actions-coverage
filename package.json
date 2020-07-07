@@ -1,6 +1,6 @@
 {
   "name": "actions-coverage",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "private": true,
   "description": "GitHub Action to run coverage",
   "main": "lib/main.js",
@@ -11,15 +11,13 @@
   "author": "ankri",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "1.2.3",
-    "@actions/exec": "1.0.3",
-    "@tangro/tangro-github-toolkit": "1.0.0",
-    "lodash": "4.17.15"
+    "@actions/core": "1.2.4",
+    "@actions/exec": "1.0.4",
+    "@tangro/tangro-github-toolkit": "1.0.1"
   },
   "devDependencies": {
-    "@types/lodash": "4.14.149",
-    "@types/node": "13.7.7",
-    "@zeit/ncc": "0.21.1",
-    "typescript": "3.8.3"
+    "@types/node": "14.0.18",
+    "@zeit/ncc": "0.22.3",
+    "typescript": "3.9.6"
   }
 }

@@ -1,7 +1,6 @@
 import { exec } from '@actions/exec';
 import * as fs from 'fs';
 import * as core from '@actions/core';
-import { padEnd, padStart } from 'lodash';
 import path from 'path';
 import { ExecOptions } from '@actions/exec/lib/interfaces';
 import { Result } from '@tangro/tangro-github-toolkit';
@@ -34,22 +33,20 @@ interface Coverage {
 }
 
 enum CoverageType {
-  LINES       = 'lines',
-  STATEMENTS  = 'statements',
-  FUNCTIONS   = 'functions',
-  BRANCHES    = 'branches',
+  LINES = 'lines',
+  STATEMENTS = 'statements',
+  FUNCTIONS = 'functions',
+  BRANCHES = 'branches'
 }
 
 const markdownTableCoverage = (coverage: Coverage): string => {
-  const formatKey = (k: string) => padEnd(k, 7);
-  const formatValue = (v: string) => padStart(v.toString(), 7);
+  const formatKey = (k: string) => k.padEnd(7);
+  const formatValue = (v: string) => v.toString().padStart(7);
 
   const header =
-    padEnd('criterium', 10) +
+    'criterium'.padEnd(10) +
     '|' +
-    Object.keys(coverage.lines)
-      .map(formatKey)
-      .join('|') +
+    Object.keys(coverage.lines).map(formatKey).join('|') +
     '\n';
 
   return (
@@ -58,7 +55,7 @@ const markdownTableCoverage = (coverage: Coverage): string => {
     Object.keys(coverage)
       .map(
         x =>
-          padEnd(x, 10) +
+          x.padEnd(10) +
           '|' +
           Object.keys(coverage[x])
             .map(k => coverage[x][k])
@@ -88,7 +85,9 @@ const parseCoverage = (coverageSummary: Coverage): Result<Coverage> => {
 };
 
 const getMinCoveragePct = (type: CoverageType) => {
-  const minValue = parseInt(core.getInput('coverage-' + type) || core.getInput('coverage') || '');
+  const minValue = parseInt(
+    core.getInput('coverage-' + type) || core.getInput('coverage') || ''
+  );
   return !isNaN(minValue) ? minValue : 100;
 };
 
