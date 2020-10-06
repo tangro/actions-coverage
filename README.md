@@ -4,7 +4,7 @@ A @tangro action to run jest with coverage. The command which is run is configur
 
 # Version
 
-Either use a specific version of this action, or `latest` which should always point to the latest version of `tangro/actions-coverage`. The latest published version of this action is `v1.1.7`.
+Either use a specific version of this action, or `latest` which should always point to the latest version of `tangro/actions-coverage`. The latest published version of this action is `v1.1.8`.
 
 # Example Usage
 
@@ -22,7 +22,7 @@ jobs:
       - name: Run npm install
         run: npm install
       - name: Collect Coverage
-        uses: tangro/actions-coverage@v1.1.7
+        uses: tangro/actions-coverage@v1.1.8
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_CONTEXT: ${{ toJson(github) }}
@@ -50,7 +50,7 @@ It is also possible that the action posts a comment with the result to the commi
 ```yml
 steps:
   - name: Collect Coverage
-    uses: tangro/actions-coverage@v1.1.7
+    uses: tangro/actions-coverage@v1.1.8
     with:
       command: 'coverage'
     env:
@@ -63,7 +63,7 @@ steps:
 ```yml
 steps:
   - name: Collect Coverage
-    uses: tangro/actions-coverage@v1.1.7
+    uses: tangro/actions-coverage@v1.1.8
     with:
       post-comment: true
     env:
@@ -78,7 +78,7 @@ There is also an option to adapt the minimum coverage percentage limits that nee
 ```yml
 steps:
   - name: Collect Coverage
-    uses: tangro/actions-coverage@v1.1.7
+    uses: tangro/actions-coverage@v1.1.8
     with:
       coverage: 94
       coverage-lines: 96
@@ -87,6 +87,53 @@ steps:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       GITHUB_CONTEXT: ${{ toJson(github) }}
 ```
+
+# Using with a static file server
+
+You can also publish the results to a static file server. The action will write the results into `i18next/index.html`.
+
+You can publish the results with our custom [deploy actions](https://github.com/tangro/actions-deploy)
+
+```yml
+coverage:
+  runs-on: ubuntu-latest
+  needs: test
+  steps:
+    - name: Checkout latest code
+      uses: actions/checkout@v2
+    - name: Use Node.js 12.x
+      uses: actions/setup-node@v2
+      with:
+        node-version: 12.x
+    - name: Authenticate with GitHub package registry
+      run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.ACCESS_TOKEN }}" >> ~/.npmrc
+    - name: Run npm install
+      run: npm install
+    - name: Collect Coverage
+      uses: tangro/actions-coverage@v1.1.8
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+    - name: Zip coverage results
+      run: |
+        cd coverage
+        cd lcov-report
+        zip --quiet --recurse-paths ../../coverage.zip *
+    - name: Deploy coverage
+      uses: tangro/actions-deploy@v1.2.5
+      with:
+        context: auto
+        zip-file: coverage.zip
+        deploy-url: ${{secrets.DEPLOY_URL}}
+        project: coverage
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+        DEPLOY_PASSWORD: ${{ secrets.DEPLOY_PASSWORD }}
+        DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+```
+
+> **Attention** Do not forget to use the correct `DEPLOY_URL` and provide all the tokens the actions need.
 
 ## Development
 
