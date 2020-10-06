@@ -1,12 +1,15 @@
 {
-  "name": "actions-coverage",
+  "name": "@tangro/actions-coverage",
   "version": "1.1.5",
   "private": true,
   "description": "GitHub Action to run coverage",
   "main": "lib/main.js",
   "scripts": {
     "build": "ncc build src/main.ts --minify",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "update-readme": "node scripts/update-readme.js",
+    "update-dependencies": "npx npm-check-updates -u",
+    "version": "npm run build && git add -A",
+    "postversion": "npm run update-readme && git add -A && git commit -m \"updated readme\" && git push"
   },
   "author": "ankri",
   "license": "MIT",
@@ -18,6 +21,7 @@
   "devDependencies": {
     "@types/node": "14.11.5",
     "@zeit/ncc": "0.22.3",
+    "ejs": "3.1.5",
     "typescript": "4.0.3"
   }
 }
