@@ -25,6 +25,9 @@ async function main() {
     actions: {
       'setup-node': await getActionWithVersion('actions', 'setup-node'),
       checkout: await getActionWithVersion('actions', 'checkout')
+    },
+    tangro: {
+      'actions-deploy': await getActionWithVersion('tangro', 'actions-deploy')
     }
   };
 

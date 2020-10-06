@@ -88,6 +88,53 @@ steps:
       GITHUB_CONTEXT: ${{ toJson(github) }}
 ```
 
+# Using with a static file server
+
+You can also publish the results to a static file server. The action will write the results into `i18next/index.html`.
+
+You can publish the results with our custom [deploy actions](https://github.com/tangro/actions-deploy)
+
+```yml
+coverage:
+  runs-on: ubuntu-latest
+  needs: test
+  steps:
+    - name: Checkout latest code
+      uses: <%= actions.checkout %>
+    - name: Use Node.js 12.x
+      uses: <%= actions['setup-node'] %>
+      with:
+        node-version: 12.x
+    - name: Authenticate with GitHub package registry
+      run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.ACCESS_TOKEN }}" >> ~/.npmrc
+    - name: Run npm install
+      run: npm install
+    - name: Collect Coverage
+      uses: <%= uses %>
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+    - name: Zip coverage results
+      run: |
+        cd coverage
+        cd lcov-report
+        zip --quiet --recurse-paths ../../coverage.zip *
+    - name: Deploy coverage
+      uses: <%= tangro['actions-deploy'] %>
+      with:
+        context: auto
+        zip-file: coverage.zip
+        deploy-url: ${{secrets.DEPLOY_URL}}
+        project: coverage
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+        DEPLOY_PASSWORD: ${{ secrets.DEPLOY_PASSWORD }}
+        DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+```
+
+> **Attention** Do not forget to use the correct `DEPLOY_URL` and provide all the tokens the actions need.
+
 ## Development
 
 Follow the guide of the [tangro-actions-template](https://github.com/tangro/tangro-actions-template)
