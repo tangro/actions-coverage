@@ -32,8 +32,8 @@ async function run() {
       createComment({ context, comment: comment.text });
     }
   } catch (error) {
-    core.error(error);
-    core.setFailed(error.message);
+    core.error(error as any);
+    core.setFailed((error as any)?.message ?? 'ERROR happened');
   }
 }
 
