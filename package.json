@@ -1,6 +1,6 @@
 {
   "name": "@tangro/actions-coverage",
-  "version": "1.1.12",
+  "version": "1.1.13",
   "private": true,
   "description": "GitHub Action to run coverage",
   "main": "lib/main.js",
