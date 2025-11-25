@@ -4,7 +4,7 @@ A @tangro action to run jest with coverage. The command which is run is configur
 
 # Version
 
-Either use a specific version of this action, or `latest` which should always point to the latest version of `tangro/actions-coverage`. The latest published version of this action is `v1.1.18`.
+Either use a specific version of this action, or `latest` which should always point to the latest version of `tangro/actions-coverage`. The latest published version of this action is `v1.1.19`.
 
 # Example Usage
 
@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout latest code
-        uses: actions/checkout@v6-beta
+        uses: actions/checkout@v6
       - name: Use Node.js 16.x
         uses: actions/setup-node@v6.0.0
         with:
@@ -22,7 +22,7 @@ jobs:
       - name: Run npm install
         run: npm install
       - name: Collect Coverage
-        uses: tangro/actions-coverage@v1.1.18
+        uses: tangro/actions-coverage@v1.1.19
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_CONTEXT: ${{ toJson(github) }}
@@ -50,7 +50,7 @@ It is also possible that the action posts a comment with the result to the commi
 ```yml
 steps:
   - name: Collect Coverage
-    uses: tangro/actions-coverage@v1.1.18
+    uses: tangro/actions-coverage@v1.1.19
     with:
       command: 'coverage'
     env:
@@ -63,7 +63,7 @@ steps:
 ```yml
 steps:
   - name: Collect Coverage
-    uses: tangro/actions-coverage@v1.1.18
+    uses: tangro/actions-coverage@v1.1.19
     with:
       post-comment: true
     env:
@@ -78,7 +78,7 @@ There is also an option to adapt the minimum coverage percentage limits that nee
 ```yml
 steps:
   - name: Collect Coverage
-    uses: tangro/actions-coverage@v1.1.18
+    uses: tangro/actions-coverage@v1.1.19
     with:
       coverage: 94
       coverage-lines: 96
@@ -100,7 +100,7 @@ coverage:
   needs: test
   steps:
     - name: Checkout latest code
-      uses: actions/checkout@v6-beta
+      uses: actions/checkout@v6
     - name: Use Node.js 16.x
       uses: actions/setup-node@v6.0.0
       with:
@@ -110,7 +110,7 @@ coverage:
     - name: Run npm install
       run: npm install
     - name: Collect Coverage
-      uses: tangro/actions-coverage@v1.1.18
+      uses: tangro/actions-coverage@v1.1.19
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GITHUB_CONTEXT: ${{ toJson(github) }}
@@ -120,7 +120,7 @@ coverage:
         cd lcov-report
         zip --quiet --recurse-paths ../../coverage.zip *
     - name: Deploy coverage
-      uses: tangro/actions-deploy@v1.2.22
+      uses: tangro/actions-deploy@v1.2.23
       with:
         context: auto
         zip-file: coverage.zip
