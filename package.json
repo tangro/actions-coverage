@@ -23,6 +23,6 @@
     "@types/node": "26.6.6",
     "ejs": "7.0.2",
     "rimraf": "6.1.4",
-    "typescript": "7.0.2"
+    "typescript": "5.9.3"
   }
 }
